@@ -1,0 +1,4 @@
+database create auth
+transaction auth schema write
+source /schema.tql
+commit

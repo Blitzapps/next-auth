@@ -1,0 +1,80 @@
+define 
+
+# Shared
+id sub attribute, value string;
+email sub attribute, abstract, value string, regex '^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$';
+
+# User
+User·name sub attribute, value string;
+User·email sub email;
+User·emailVerified sub attribute, value datetime;
+User·image sub attribute, value string;
+User sub entity,
+    owns id @key,
+    owns User·name,
+    owns User·email,
+    owns User·emailVerified,
+    owns User·image,
+	plays UserAccount:user,
+	plays UserSession:user;
+
+# Account
+Account·type sub attribute, value string;
+Account·provider sub attribute, value string;
+Account·providerAccountId sub attribute, value string;
+Account·refresh_token sub attribute, value string;
+Account·access_token sub attribute, value string;
+Account·expires_at sub attribute, value long;
+Account·token_type sub attribute, value string;
+Account·scope sub attribute, value string;
+Account·id_token sub attribute, value string;
+Account·session_state sub attribute, value string;
+Account·oauth_token_secret sub attribute, value string;
+Account·oauth_token sub attribute, value string;
+Account sub entity,
+    owns id @key,
+    owns Account·type,
+    owns Account·provider,
+    owns Account·providerAccountId,
+    owns Account·refresh_token,
+    owns Account·access_token,
+    owns Account·expires_at,
+    owns Account·token_type,
+    owns Account·scope,
+    owns Account·id_token,
+    owns Account·session_state,
+    owns Account·oauth_token_secret,
+    owns Account·oauth_token,
+	plays UserAccount:account;
+
+# Session
+Session·expires sub attribute, value datetime;
+Session·sessionToken sub attribute, value string;
+Session sub entity,
+    owns id @key,
+    owns Session·expires,
+    owns Session·sessionToken @key,
+	plays UserSession:session;
+
+# VerificationToken
+VerificationToken·identifier sub attribute, value string;
+VerificationToken·token sub attribute, value string;
+VerificationToken·expires sub attribute, value datetime;
+VerificationToken sub entity,
+	owns id @key,
+    owns VerificationToken·identifier,
+    owns VerificationToken·token @key,
+    owns VerificationToken·expires;
+    
+
+# UserAccount
+UserAccount sub relation,
+	owns id @key,
+    relates user,
+    relates account;
+
+# UserSession
+UserSession sub relation,
+	owns id @key,
+	relates user,
+	relates session;

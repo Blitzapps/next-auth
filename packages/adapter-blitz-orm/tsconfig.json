@@ -1,0 +1,10 @@
+{
+  "extends": "@next-auth/tsconfig/tsconfig.adapters.json",
+  "compilerOptions": {
+	"target": "ES2022",
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["."],
+  "exclude": ["tests", "dist", "jest.config.js"]
+}
